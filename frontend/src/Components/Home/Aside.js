@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';  
+import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { updateFilter } from '../../Redux/filters';
 
 
 const Aside = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [filters,setFilters] = useState(
     {
@@ -34,7 +37,7 @@ const Aside = () => {
       navigate("/categories/"+category.catId);
     }
     function handleFilters(){
-      console.log(filters);
+      dispatch(updateFilter(filters));
     }
 
 
@@ -58,8 +61,8 @@ const Aside = () => {
                   <div className='flex justify-between'>
                     {
                       ['Min','Max'].map((each,index) => <div key={index} className='flex'>
-                        <p className='text-zinc-700 pl-1 text-[16px]'>{each} : </p>
-                        <input type="num" className='text-zinc-700 pl-3 text-[16px] caret-transparent w-16 ml-2 border-2 border-gray-300 focus:outline-none'  value={filters['price'][`${each.toLowerCase()}`]} onChange={e => setFilters({...filters ,price:{...filters['price'],[`${each}`.toLowerCase()]:e.target.value}})}/>
+                        <p className='text-zinc-700 pl-3 text-[16px]'>{each} : </p>
+                        <input type="num" className='text-zinc-700 pl-3 text-[16px] caret-transparent w-16 ml-2 border-2 border-gray-300 focus:outline-none'  value={parseInt(filters['price'][`${each.toLowerCase()}`])} onChange={e => setFilters({...filters ,price:{...filters['price'],[`${each}`.toLowerCase()]:e.target.value === '' ? 0 : e.target.value}})}/>
                       </div> )
                     }
                     

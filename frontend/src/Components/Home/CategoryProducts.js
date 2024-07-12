@@ -4,11 +4,19 @@ import Card from './Card';
 import {ProductDetails} from '../Data/ProductDetails';
 import axios from "axios";
 import { Button, CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const CategoryProducts = () => {
  
   const {catId} = useParams();
+
+  const filters = useSelector(state => state.filter.filters);
+
   
+
+  console.log(filters);
+
+
   const [fetched,setFetched] = useState(false);
   const [products,setProducts] = useState([]);
   const [categoryProducts,setCategoryProducts] = useState([]);
@@ -21,17 +29,16 @@ const CategoryProducts = () => {
     
   
 
-
-
+    
     useEffect(() => {
       const fetch = async () => {
         const response = await ProductDetails();
         setProducts(response);
         setFetched(true);
-        setCategoryProducts(response.filter( product => product.catId == catId || catId === undefined));
+        setCategoryProducts(response.filter( product => (product.catId == catId || catId === undefined) && (product.price >= parseInt(filters.price.min) && (filters.price.max == 0  || product.price <= parseInt(filters.price.max)))));
     }
     fetch();
-    }, [catId]);
+    }, [catId,filters]);
 
   return (
     <div>

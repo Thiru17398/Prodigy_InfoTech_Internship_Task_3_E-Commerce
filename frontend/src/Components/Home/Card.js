@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { addProduct } from '../../Redux/counter/cartSlice';
+import { addProduct } from '../../Redux/cart/cartSlice';
 
 const Card = ({product}) => {
     

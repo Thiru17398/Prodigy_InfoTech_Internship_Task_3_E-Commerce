@@ -16,19 +16,36 @@ const mongoClient = new MongoClient(uri);
 
 const db = mongoClient.db("test");
 
-const collection = db.collection("products");
+const products = db.collection("products");
+
+const orders = db.collection("orders");
 
 
 app.get('/data' ,  async (req , res) => {
     var result = [];
     try{
-        await collection.find().toArray().then(respone => result = [...respone]);
+        await products.find().toArray().then(response => result = [...response]);
     }
     finally{
         console.log('Data Insertion');
     }
     return res.send(result);
-})
+});
+
+
+app.post('/orderItems' , async (req,res) => {
+    var cartItems = req.body;
+    try{
+        const response = await orders.insertOne(cartItems);
+        console.log(response);
+    }
+    finally{
+        console.log('Order Items');
+    }
+    res.status(200).send({
+        message:'Order Placed'
+    })
+});
 
 
 
