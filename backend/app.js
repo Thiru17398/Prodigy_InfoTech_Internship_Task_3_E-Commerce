@@ -47,6 +47,18 @@ app.post('/orderItems' , async (req,res) => {
     })
 });
 
+app.get('/orders', async (req,res) => {
+    var response;
+    try{
+        await orders.find().toArray().then(res => response = res);
+        console.log(response);
+    }
+    finally{
+        console.log('Orders Fetched');
+    }
+    res.status(200).send(response);
+})
+
 
 
 const port = process.env.PORT || 5000;

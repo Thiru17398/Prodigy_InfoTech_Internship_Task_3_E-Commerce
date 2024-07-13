@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from './Card';
-import {ProductDetails} from '../Data/ProductDetails';
+import {Fetch} from '../Data/Fetch';
 import axios from "axios";
 import { Button, CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ const CategoryProducts = () => {
     
     useEffect(() => {
       const fetch = async () => {
-        const response = await ProductDetails();
+        const response = await Fetch('/data');
         setProducts(response);
         setFetched(true);
         setCategoryProducts(response.filter( product => (product.catId == catId || catId === undefined) && (product.price >= parseInt(filters.price.min) && (filters.price.max == 0  || product.price <= parseInt(filters.price.max)))));
