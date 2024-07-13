@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
-import { updateFilter } from '../../Redux/filters';
+import { updateFilter, clearFilter } from '../../Redux/filters';
 
 
 const Aside = () => {
@@ -34,10 +34,21 @@ const Aside = () => {
     ]);
 
     function handleClick(category){
+      handleClearFilter();
       navigate("/categories/"+category.catId);
     }
     function handleFilters(){
       dispatch(updateFilter(filters));
+    }
+
+    function handleClearFilter(){
+      setFilters({
+        price:{
+        min:0,
+        max:0
+        }
+      });
+      dispatch(clearFilter());
     }
 
 
@@ -67,7 +78,8 @@ const Aside = () => {
                     }
                     
                   </div>
-                  <Button variant="contained" sx={{width:"25px",height:"30px",margin:"20px"}} onClick={handleFilters}>Apply</Button>  
+                  <Button variant="contained" sx={{width:"25px",height:"30px",margin:"20px"}} onClick={handleFilters}>Apply</Button>
+                  <Button variant='contained' sx={{width:"25px",height:"30px",margin:"20px"}} onClick={handleClearFilter}>Clear</Button>  
                 </div>
       </div>
 

@@ -11,7 +11,7 @@ const OrdersCard = ({order}) => {
       
       {
         order.cardItems.map( (item,index) => 
-          <div key={index} className='flex border-2 border-gray-300 m-5 p-5 justify-around'>
+          <div key={index} className='flex border-2 border-gray-300 m-5 p-5 justify-around bg-gray-100'>
             <img src={item.img} className='h-[70px] w-[70px]' />
 
             <div className='ml-60 justify-between flex w-2/5'>
